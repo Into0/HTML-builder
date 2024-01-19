@@ -4,10 +4,13 @@ const readline = require('readline');
 
 const rl = readline.createInterface({
   input: process.stdin,
-  output: process.stdout
+  output: process.stdout,
 });
 
-const writeStream = fs.createWriteStream(path.join(__dirname, 'text.txt'), 'utf8');
+const writeStream = fs.createWriteStream(
+  path.join(__dirname, 'text.txt'),
+  'utf8',
+);
 
 console.log('Hello, Write Some Text\n');
 

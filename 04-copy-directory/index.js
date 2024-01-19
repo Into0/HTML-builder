@@ -10,8 +10,9 @@ fs.rm(copyPath, { recursive: true }, () => {
   fs.mkdir(path.join(__dirname, 'files-copy'), () => {});
 
   fs.readdir(dirPath, { withFileTypes: true }, (err, files) => {
-    const filter = files.filter(item => item.isFile()).map(item => item.name);
-    
+    const filter = files
+      .filter((item) => item.isFile())
+      .map((item) => item.name);
     filter.forEach((file) => {
       fs.copyFile(`${dirPath}\\${file}`, `${copyPath}\\${file}`, () => {});
     });
