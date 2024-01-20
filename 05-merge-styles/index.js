@@ -1,19 +1,17 @@
 const fs = require('fs');
 const path = require('path');
 
-const dirPath = fs.createReadStream(path.join(__dirname, 'styles/')).path;
-const distFolder = fs.createReadStream(
-  path.join(__dirname, 'project-dist/'),
-).path;
-const writeStream = fs.createWriteStream(distFolder + 'bundle.css');
+const stylesDir = path.join(__dirname, 'styles/');
+const distDir = path.join(__dirname, 'project-dist/');
 
-fs.readdir(dirPath, { withFileTypes: true }, (err, files) => {
-  const filter = files.filter((item) => item.isFile()).map((item) => item.name);
+const bundleCSS = fs.createWriteStream(distDir + 'bundle.css');
 
-  filter.forEach((file) => {
+fs.readdir(stylesDir, { withFileTypes: true }, (err, files) => {
+  const onlyFiles = files.filter((item) => item.isFile()).map((item) => item.name);
+
+  onlyFiles.forEach((file) => {
     if (file.endsWith('.css')) {
-      fs.createReadStream(dirPath + file).pipe(writeStream);
-      console.log(dirPath);
+      fs.createReadStream(stylesDir + file).pipe(bundleCSS);
     }
   });
 });

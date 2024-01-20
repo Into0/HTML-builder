@@ -1,14 +1,14 @@
 const fs = require('fs');
 const path = require('path');
 
-const dirPath = fs.createReadStream(path.join(__dirname, 'secret-folder')).path;
+const secretDir = path.join(__dirname, 'secret-folder/');
 
-fs.readdir(dirPath, { withFileTypes: true }, (err, files) => {
-  const filter = files.filter((item) => item.isFile()).map((item) => item.name);
+fs.readdir(secretDir, { withFileTypes: true }, (err, files) => {
+  const onlyFiles = files.filter((item) => item.isFile()).map((item) => item.name);
 
-  filter.forEach((file) => {
-    fs.stat(dirPath + `\\${file}`, (err, stats) => {
-      const size = (stats.size / 1024).toFixed(3);
+  onlyFiles.forEach((file) => {
+    fs.stat(secretDir + file, (err, stats) => {
+      const size = (stats.size / 1000).toFixed(3);
       const ext = path.parse(`${file}`).ext.slice(1);
       const name = path.parse(`${file}`).name;
 

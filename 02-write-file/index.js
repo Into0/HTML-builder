@@ -7,10 +7,7 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-const writeStream = fs.createWriteStream(
-  path.join(__dirname, 'text.txt'),
-  'utf8',
-);
+const filePath = fs.createWriteStream(path.join(__dirname, 'text.txt'));
 
 console.log('Hello, Write Some Text\n');
 
@@ -19,7 +16,7 @@ rl.on('line', (message) => {
     console.log('\nSee You Soon :)');
     process.exit();
   }
-  writeStream.write(`${message}\n`);
+  filePath.write(`${message}\n`);
 });
 
 rl.on('SIGINT', () => {
