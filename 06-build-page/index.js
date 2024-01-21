@@ -9,10 +9,15 @@ const stylesDir = path.join(__dirname, 'styles/');
 
 fs.mkdir(path.join(__dirname, 'project-dist'), () => {});
 
-const templateFile = fs.createReadStream(path.join(__dirname, 'template.html'), 'utf8');
+const templateFile = fs.createReadStream(
+  path.join(__dirname, 'template.html'),
+  'utf8',
+);
 templateFile.on('data', (tempData) => {
   fs.readdir(compDir, { withFileTypes: true }, (err, files) => {
-    const onlyFiles = files.filter((item) => item.isFile()).map((item) => item.name);
+    const onlyFiles = files
+      .filter((item) => item.isFile())
+      .map((item) => item.name);
 
     onlyFiles.forEach((file) => {
       if (file.endsWith('.html')) {
@@ -39,12 +44,15 @@ fs.readdir(stylesDir, { withFileTypes: true }, (err, files) => {
 });
 
 async function copyAssets() {
-  let files = await fsp.readdir(assetsDir, { recursive: true, withFileTypes: true });
+  let files = await fsp.readdir(assetsDir, {
+    recursive: true,
+    withFileTypes: true,
+  });
   for (let file of files) {
     let assetsPath = path.join(file.path, file.name);
     let distPath = assetsPath.replace(assetsDir, path.join(distDir, 'assets/'));
-    let dirs = path.dirname(distPath); 
-    console.log(distPath)
+    let dirs = path.dirname(distPath);
+    console.log(distPath);
     if (file.isFile()) {
       await fsp.mkdir(dirs, { recursive: true });
       await fsp.copyFile(assetsPath, distPath);

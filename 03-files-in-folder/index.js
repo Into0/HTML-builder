@@ -4,7 +4,9 @@ const path = require('path');
 const secretDir = path.join(__dirname, 'secret-folder/');
 
 fs.readdir(secretDir, { withFileTypes: true }, (err, files) => {
-  const onlyFiles = files.filter((item) => item.isFile()).map((item) => item.name);
+  const onlyFiles = files
+    .filter((item) => item.isFile())
+    .map((item) => item.name);
 
   onlyFiles.forEach((file) => {
     fs.stat(secretDir + file, (err, stats) => {
