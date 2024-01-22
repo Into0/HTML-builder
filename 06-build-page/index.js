@@ -13,6 +13,7 @@ const templateFile = fs.createReadStream(
   path.join(__dirname, 'template.html'),
   'utf8',
 );
+
 templateFile.on('data', (tempData) => {
   fs.readdir(compDir, { withFileTypes: true }, (err, files) => {
     const onlyFiles = files
@@ -52,7 +53,6 @@ async function copyAssets() {
     let assetsPath = path.join(file.path, file.name);
     let distPath = assetsPath.replace(assetsDir, path.join(distDir, 'assets/'));
     let dirs = path.dirname(distPath);
-    console.log(distPath);
     if (file.isFile()) {
       await fsp.mkdir(dirs, { recursive: true });
       await fsp.copyFile(assetsPath, distPath);
