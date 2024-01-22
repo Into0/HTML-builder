@@ -10,7 +10,7 @@ fs.readdir(secretDir, { withFileTypes: true }, (err, files) => {
 
   onlyFiles.forEach((file) => {
     fs.stat(secretDir + file, (err, stats) => {
-      const size = (stats.size / 1000).toFixed(3);
+      const size = (stats.size / 1024).toFixed(3);
       const ext = path.parse(`${file}`).ext.slice(1);
       const name = path.parse(`${file}`).name;
 
